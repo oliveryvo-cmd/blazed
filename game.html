@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>BLAZED Delivery — The Game</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Courier+Prime:wght@400;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#07090f;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;font-family:'Oswald',sans-serif;overflow:hidden;}
+#ui{width:800px;display:flex;justify-content:space-between;align-items:center;padding:12px 0;flex-wrap:wrap;gap:8px;}
+.stat{text-align:center;}
+.stat-val{font-size:28px;font-weight:700;display:block;}
+.stat-label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;color:#444;}
+#rankDisplay{font-size:20px;letter-spacing:3px;padding:6px 20px;border-radius:100px;border:2px solid;}
+canvas{display:block;border:3px solid #1a2030;border-radius:4px;}
+#overlay{position:fixed;inset:0;background:rgba(7,9,15,0.95);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:10;text-align:center;padding:20px;}
+#overlay h1{font-size:clamp(40px,8vw,80px);letter-spacing:6px;margin-bottom:8px;}
+#overlay .sub{font-family:'Courier Prime',monospace;font-size:13px;letter-spacing:3px;color:#555;margin-bottom:32px;}
+#overlay .desc{font-size:16px;color:#a0aec0;max-width:480px;line-height:1.8;margin-bottom:40px;}
+#startBtn{background:linear-gradient(135deg,#ff6b00,#ffd000);color:#000;border:none;padding:18px 56px;font-family:'Oswald',sans-serif;font-size:22px;letter-spacing:4px;font-weight:700;border-radius:8px;cursor:pointer;transition:all .2s;}
+#startBtn:hover{transform:translateY(-3px);}
+.controls{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:2px;color:#333;margin-top:24px;line-height:2;}
+.controls span{color:#ff6b00;}
+#scoreBoard{display:none;flex-direction:column;align-items:center;gap:16px;}
+.final-rank{font-size:64px;margin-bottom:8px;}
+.rank-row{display:flex;gap:24px;flex-wrap:wrap;justify-content:center;}
+.rank-item{text-align:center;padding:16px 24px;border-radius:12px;border:2px solid #1a2030;}
+.rank-item.achieved{border-color:#ff6b00;}
+.rank-item .ri{font-size:32px;display:block;}
+.rank-item .rn{font-size:14px;letter-spacing:2px;color:#ff6b00;margin-top:4px;}
+.rank-item .rr{font-family:'Courier Prime',monospace;font-size:10px;color:#444;margin-top:2px;}
+</style>
+</head>
+<body>
+
+<div id="ui">
+  <div class="stat"><span class="stat-val" id="deliveries" style="color:#ff6b00">0</span><div class="stat-label">DELIVERIES</div></div>
+  <div class="stat"><span class="stat-val" id="boxes" style="color:#ffd000">3</span><div class="stat-label">BOXES LEFT</div></div>
+  <div id="rankDisplay" style="color:#ff6b00;border-color:#ff6b00;">✦ SPARK</div>
+  <div class="stat"><span class="stat-val" id="timer" style="color:#0099ff">60</span><div class="stat-label">SECONDS</div></div>
+  <div class="stat"><span class="stat-val" id="score" style="color:#00e676">0</span><div class="stat-label">SCORE</div></div>
+</div>
+
+<canvas id="c" width="800" height="520"></canvas>
+
+<div id="overlay">
+  <div id="startScreen">
+    <h1 style="color:#ff6b00">B.L.A.Z.E.D</h1>
+    <div class="sub">// THE DELIVERY GAME</div>
+    <p class="desc">Ride Oliver's bike around Ladera Ranch and deliver B.L.A.Z.E.D joy boxes to disabled kids. Pick up boxes, dodge obstacles, and rank up the more you deliver.</p>
+    <button id="startBtn" onclick="startGame()">🚲 START DELIVERING</button>
+    <div class="controls">
+      <span>ARROW KEYS</span> or <span>WASD</span> — MOVE &nbsp;|&nbsp; <span>SPACE</span> — DELIVER BOX<br>
+      Drive near a glowing house and press SPACE to deliver!
+    </div>
+  </div>
+  <div id="scoreBoard">
+    <div class="final-rank" id="finalIcon">✦</div>
+    <h1 id="finalRank" style="color:#ff6b00;font-size:48px;letter-spacing:4px;">SPARK</h1>
+    <p style="font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:3px;color:#555;margin-bottom:8px;">FINAL RANK</p>
+    <p id="finalDeliveries" style="font-size:20px;color:#a0aec0;margin-bottom:32px;"></p>
+    <div class="rank-row">
+      <div class="rank-item" id="r0"><span class="ri">✦</span><div class="rn">SPARK</div><div class="rr">0+ deliveries</div></div>
+      <div class="rank-item" id="r1"><span class="ri">🔥</span><div class="rn">BLAZER</div><div class="rr">5+ deliveries</div></div>
+      <div class="rank-item" id="r2"><span class="ri">⚡</span><div class="rn">INFERNO</div><div class="rr">15+ deliveries</div></div>
+      <div class="rank-item" id="r3"><span class="ri">👑</span><div class="rn">LEGEND</div><div class="rr">30+ deliveries</div></div>
+    </div>
+    <button id="startBtn" onclick="startGame()" style="margin-top:32px;">🔄 PLAY AGAIN</button>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const W = 800, H = 520;
+
+// Colors
+const C = {
+  dark: '#07090f', dark2: '#0d1220', road: '#111827',
+  roadLine: '#1f2937', sidewalk: '#0f1929', grass: '#0a1f0a',
+  orange: '#ff6b00', yellow: '#ffd000', blue: '#0099ff',
+  coral: '#ff4d6d', green: '#00e676', white: '#f8faff', silver: '#a0aec0'
+};
+
+let player, houses, obstacles, pickups, particles, keys;
+let deliveries, boxCount, timeLeft, score, gameRunning, timerInterval;
+
+const RANKS = [
+  { name: 'SPARK', icon: '✦', min: 0, color: '#ff6b00' },
+  { name: 'BLAZER', icon: '🔥', min: 5, color: '#ffd000' },
+  { name: 'INFERNO', icon: '⚡', min: 15, color: '#0099ff' },
+  { name: 'LEGEND', icon: '👑', min: 30, color: '#ff4d6d' },
+];
+
+function getRank(d) {
+  let r = RANKS[0];
+  for (const rk of RANKS) { if (d >= rk.min) r = rk; }
+  return r;
+}
+
+function initGame() {
+  keys = {};
+  deliveries = 0;
+  boxCount = 3;
+  timeLeft = 60;
+  score = 0;
+  gameRunning = false;
+  particles = [];
+
+  player = {
+    x: 200, y: 260, w: 28, h: 36,
+    vx: 0, vy: 0, speed: 3.5,
+    dir: 'right', delivering: false, deliverCooldown: 0,
+    bobFrame: 0
+  };
+
+  // Street layout: roads at y=130, y=260, y=390; x=200, x=600 vertical
+  houses = [
+    { x: 60,  y: 60,  w: 70, h: 55, needsBox: true,  delivered: false, flash: 0, side: 'top' },
+    { x: 220, y: 60,  w: 70, h: 55, needsBox: true,  delivered: false, flash: 0, side: 'top' },
+    { x: 420, y: 60,  w: 70, h: 55, needsBox: false, delivered: false, flash: 0, side: 'top' },
+    { x: 620, y: 60,  w: 70, h: 55, needsBox: true,  delivered: false, flash: 0, side: 'top' },
+    { x: 60,  y: 405, w: 70, h: 55, needsBox: false, delivered: false, flash: 0, side: 'bottom' },
+    { x: 250, y: 405, w: 70, h: 55, needsBox: true,  delivered: false, flash: 0, side: 'bottom' },
+    { x: 450, y: 405, w: 70, h: 55, needsBox: true,  delivered: false, flash: 0, side: 'bottom' },
+    { x: 640, y: 405, w: 70, h: 55, needsBox: false, delivered: false, flash: 0, side: 'bottom' },
+    { x: 30,  y: 175, w: 55, h: 70, needsBox: true,  delivered: false, flash: 0, side: 'left' },
+    { x: 715, y: 175, w: 55, h: 70, needsBox: false, delivered: false, flash: 0, side: 'right' },
+    { x: 30,  y: 290, w: 55, h: 70, needsBox: false, delivered: false, flash: 0, side: 'left' },
+    { x: 715, y: 290, w: 55, h: 70, needsBox: true,  delivered: false, flash: 0, side: 'right' },
+  ];
+
+  obstacles = [];
+  for (let i = 0; i < 5; i++) spawnObstacle();
+
+  pickups = [];
+  for (let i = 0; i < 4; i++) spawnPickup();
+}
+
+function spawnObstacle() {
+  const lanes = [130, 260, 390];
+  const lane = lanes[Math.floor(Math.random() * lanes.length)];
+  const goRight = Math.random() > 0.5;
+  obstacles.push({
+    x: goRight ? -40 : W + 40,
+    y: lane - 14,
+    w: 44, h: 28,
+    vx: (goRight ? 1 : -1) * (1.2 + Math.random() * 0.8),
+    color: ['#1e3a5f','#3a1e1e','#1e3a2a'][Math.floor(Math.random()*3)],
+    type: Math.random() > 0.7 ? 'dog' : 'car'
+  });
+}
+
+function spawnPickup() {
+  // Place on roads
+  const roadY = [130, 260, 390][Math.floor(Math.random() * 3)];
+  pickups.push({
+    x: 120 + Math.random() * 560,
+    y: roadY + (Math.random() * 20 - 10),
+    w: 22, h: 22,
+    collected: false, anim: Math.random() * Math.PI * 2
+  });
+}
+
+function startGame() {
+  document.getElementById('overlay').style.display = 'none';
+  initGame();
+  gameRunning = true;
+  updateUI();
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    document.getElementById('timer').textContent = timeLeft;
+    if (timeLeft <= 0) endGame();
+  }, 1000);
+  requestAnimationFrame(loop);
+}
+
+function endGame() {
+  gameRunning = false;
+  clearInterval(timerInterval);
+  const rank = getRank(deliveries);
+
+  document.getElementById('finalRank').textContent = rank.name;
+  document.getElementById('finalRank').style.color = rank.color;
+  document.getElementById('finalIcon').textContent = rank.icon;
+  document.getElementById('finalDeliveries').textContent = deliveries + ' boxes delivered · ' + score + ' points';
+
+  RANKS.forEach((r, i) => {
+    document.getElementById('r' + i).classList.toggle('achieved', deliveries >= r.min);
+  });
+
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('scoreBoard').style.display = 'flex';
+  document.getElementById('overlay').style.display = 'flex';
+}
+
+function updateUI() {
+  document.getElementById('deliveries').textContent = deliveries;
+  document.getElementById('boxes').textContent = boxCount;
+  document.getElementById('score').textContent = score;
+  const rank = getRank(deliveries);
+  const rd = document.getElementById('rankDisplay');
+  rd.textContent = rank.icon + ' ' + rank.name;
+  rd.style.color = rank.color;
+  rd.style.borderColor = rank.color;
+}
+
+// Input
+window.addEventListener('keydown', e => {
+  keys[e.key] = true;
+  if (e.key === ' ') { e.preventDefault(); tryDeliver(); }
+});
+window.addEventListener('keyup', e => keys[e.key] = false);
+
+function tryDeliver() {
+  if (!gameRunning || player.deliverCooldown > 0 || boxCount <= 0) return;
+  // Find nearby house that needs a box
+  for (const h of houses) {
+    if (!h.needsBox || h.delivered) continue;
+    const cx = h.x + h.w / 2, cy = h.y + h.h / 2;
+    const px = player.x + player.w / 2, py = player.y + player.h / 2;
+    const dist = Math.hypot(cx - px, cy - py);
+    if (dist < 90) {
+      h.delivered = true;
+      h.needsBox = false;
+      h.flash = 40;
+      boxCount--;
+      deliveries++;
+      score += 100 + Math.floor(Math.random() * 50);
+      player.deliverCooldown = 20;
+      spawnParticles(cx, cy, C.orange);
+      updateUI();
+      // Respawn house need after delay
+      setTimeout(() => resetHouse(h), 4000 + Math.random() * 3000);
+      // Check if we need to spawn more pickups
+      if (pickups.filter(p => !p.collected).length < 3) spawnPickup();
+      return;
+    }
+  }
+}
+
+function resetHouse(h) {
+  if (!gameRunning) return;
+  h.delivered = false;
+  h.needsBox = true;
+  h.flash = 0;
+}
+
+function spawnParticles(x, y, color) {
+  for (let i = 0; i < 12; i++) {
+    const angle = (Math.PI * 2 / 12) * i + Math.random() * 0.3;
+    particles.push({
+      x, y,
+      vx: Math.cos(angle) * (2 + Math.random() * 3),
+      vy: Math.sin(angle) * (2 + Math.random() * 3),
+      life: 40, maxLife: 40,
+      color, size: 4 + Math.random() * 4
+    });
+  }
+}
+
+function update() {
+  // Player movement
+  let dx = 0, dy = 0;
+  if (keys['ArrowLeft']  || keys['a'] || keys['A']) dx -= 1;
+  if (keys['ArrowRight'] || keys['d'] || keys['D']) dx += 1;
+  if (keys['ArrowUp']    || keys['w'] || keys['W']) dy -= 1;
+  if (keys['ArrowDown']  || keys['s'] || keys['S']) dy += 1;
+
+  if (dx !== 0 && dy !== 0) { dx *= 0.707; dy *= 0.707; }
+  if (dx > 0) player.dir = 'right';
+  if (dx < 0) player.dir = 'left';
+
+  player.vx = dx * player.speed;
+  player.vy = dy * player.speed;
+  player.x = Math.max(0, Math.min(W - player.w, player.x + player.vx));
+  player.y = Math.max(0, Math.min(H - player.h, player.y + player.vy));
+
+  if (dx !== 0 || dy !== 0) player.bobFrame += 0.25;
+  if (player.deliverCooldown > 0) player.deliverCooldown--;
+
+  // Obstacles
+  for (const obs of obstacles) {
+    obs.x += obs.vx;
+    // Check collision with player
+    if (rectsOverlap(player, obs)) {
+      score = Math.max(0, score - 30);
+      player.x += (player.vx >= 0 ? -20 : 20);
+      player.y += (player.vy >= 0 ? -10 : 10);
+      spawnParticles(player.x + player.w/2, player.y + player.h/2, C.coral);
+      updateUI();
+    }
+  }
+  obstacles = obstacles.filter(o => o.x > -80 && o.x < W + 80);
+  while (obstacles.length < 5) spawnObstacle();
+
+  // Pickups
+  for (const p of pickups) {
+    p.anim += 0.05;
+    if (!p.collected && rectsOverlap(player, {...p, x: p.x - p.w/2, y: p.y - p.h/2})) {
+      p.collected = true;
+      boxCount = Math.min(boxCount + 1, 9);
+      score += 25;
+      spawnParticles(p.x, p.y, C.yellow);
+      updateUI();
+    }
+  }
+  pickups = pickups.filter(p => !p.collected);
+  while (pickups.length < 3) spawnPickup();
+
+  // Houses flash
+  for (const h of houses) {
+    if (h.flash > 0) h.flash--;
+  }
+
+  // Particles
+  for (const p of particles) {
+    p.x += p.vx; p.y += p.vy;
+    p.vy += 0.1;
+    p.life--;
+  }
+  particles = particles.filter(p => p.life > 0);
+}
+
+function rectsOverlap(a, b) {
+  return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+}
+
+function draw() {
+  ctx.fillStyle = C.dark2;
+  ctx.fillRect(0, 0, W, H);
+
+  // Grass blocks
+  ctx.fillStyle = '#0a1a0d';
+  // Top grass
+  ctx.fillRect(0, 0, W, 115);
+  // Bottom grass
+  ctx.fillRect(0, 395, W, H - 395);
+  // Middle grass strip
+  ctx.fillRect(0, 200, W, 120);
+  // Left grass
+  ctx.fillRect(0, 115, 100, 85);
+  ctx.fillRect(0, 320, 100, 75);
+  // Right grass
+  ctx.fillRect(700, 115, 100, 85);
+  ctx.fillRect(700, 320, 100, 75);
+
+  // Roads (horizontal)
+  drawRoad(0, 115, W, 85);  // top road
+  drawRoad(0, 320, W, 75);  // bottom road
+  // Roads (vertical)
+  drawRoad(100, 115, 100, 290); // left vertical
+  drawRoad(600, 115, 100, 290); // right vertical
+
+  // Center road cross
+  drawRoad(100, 200, 500, 120);
+
+  // Road center lines
+  ctx.setLineDash([20, 14]);
+  ctx.strokeStyle = '#1e3050';
+  ctx.lineWidth = 2;
+  // Horizontal lines
+  ctx.beginPath(); ctx.moveTo(0, 157); ctx.lineTo(W, 157); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0, 357); ctx.lineTo(W, 357); ctx.stroke();
+  // Vertical lines
+  ctx.beginPath(); ctx.moveTo(150, 115); ctx.lineTo(150, 405); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(650, 115); ctx.lineTo(650, 405); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Draw houses
+  for (const h of houses) drawHouse(h);
+
+  // Pickups (box icons)
+  for (const p of pickups) {
+    const bob = Math.sin(p.anim) * 3;
+    ctx.save();
+    ctx.translate(p.x, p.y + bob);
+    // Glow
+    ctx.shadowBlur = 12;
+    ctx.shadowColor = C.yellow;
+    ctx.fillStyle = C.yellow;
+    ctx.fillRect(-10, -10, 20, 20);
+    ctx.fillStyle = C.orange;
+    ctx.fillRect(-10, -12, 20, 5);
+    ctx.fillStyle = '#000';
+    ctx.font = 'bold 11px Oswald';
+    ctx.textAlign = 'center';
+    ctx.fillText('📦', 0, 6);
+    ctx.shadowBlur = 0;
+    ctx.restore();
+  }
+
+  // Obstacles
+  for (const obs of obstacles) drawObstacle(obs);
+
+  // Player
+  drawPlayer();
+
+  // Particles
+  for (const p of particles) {
+    ctx.globalAlpha = p.life / p.maxLife;
+    ctx.fillStyle = p.color;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size * (p.life / p.maxLife), 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+
+  // Delivery range indicator
+  if (boxCount > 0) {
+    const px = player.x + player.w / 2, py = player.y + player.h / 2;
+    for (const h of houses) {
+      if (!h.needsBox || h.delivered) continue;
+      const cx = h.x + h.w / 2, cy = h.y + h.h / 2;
+      const dist = Math.hypot(cx - px, cy - py);
+      if (dist < 90) {
+        ctx.strokeStyle = C.green;
+        ctx.lineWidth = 2;
+        ctx.setLineDash([6, 4]);
+        ctx.beginPath();
+        ctx.moveTo(px, py);
+        ctx.lineTo(cx, cy);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        // SPACE prompt
+        ctx.fillStyle = C.green;
+        ctx.font = 'bold 11px Courier Prime, monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('SPACE to deliver!', (px + cx) / 2, (py + cy) / 2 - 6);
+      }
+    }
+  }
+
+  // Timer danger flash
+  if (timeLeft <= 10) {
+    ctx.fillStyle = `rgba(255,77,109,${0.07 * Math.sin(Date.now() / 150 * Math.PI)})`;
+    ctx.fillRect(0, 0, W, H);
+  }
+}
+
+function drawRoad(x, y, w, h) {
+  ctx.fillStyle = '#111620';
+  ctx.fillRect(x, y, w, h);
+}
+
+function drawHouse(h) {
+  const flash = h.flash > 0;
+  const glowing = h.needsBox && !h.delivered;
+  const t = Date.now() / 500;
+
+  // House body
+  ctx.fillStyle = flash ? C.green : (glowing ? '#1a2a15' : '#0f1928');
+  ctx.fillRect(h.x, h.y, h.w, h.h);
+
+  // Border
+  ctx.strokeStyle = flash ? C.green : (glowing ? `rgba(255,107,0,${0.5 + 0.4 * Math.sin(t * Math.PI)})` : '#1a2540');
+  ctx.lineWidth = 2;
+  ctx.strokeRect(h.x, h.y, h.w, h.h);
+
+  // Roof triangle
+  ctx.fillStyle = flash ? '#00e676' : (glowing ? C.orange : '#0a1020');
+  ctx.beginPath();
+  ctx.moveTo(h.x - 4, h.y);
+  ctx.lineTo(h.x + h.w / 2, h.y - 16);
+  ctx.lineTo(h.x + h.w + 4, h.y);
+  ctx.fill();
+
+  // Door
+  ctx.fillStyle = flash ? '#004d00' : '#060c1a';
+  const dw = h.w * 0.28, dh = h.h * 0.45;
+  ctx.fillRect(h.x + h.w / 2 - dw / 2, h.y + h.h - dh, dw, dh);
+
+  // Windows
+  ctx.fillStyle = flash ? C.green : (glowing ? 'rgba(255,208,0,0.5)' : '#0f2040');
+  const wsize = 10;
+  ctx.fillRect(h.x + 8, h.y + 10, wsize, wsize);
+  ctx.fillRect(h.x + h.w - 8 - wsize, h.y + 10, wsize, wsize);
+
+  // Need box indicator
+  if (glowing) {
+    const blink = Math.sin(t * Math.PI * 2) > 0;
+    if (blink) {
+      ctx.font = '18px serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('📦', h.x + h.w / 2, h.y - 22);
+    }
+    // Glow effect
+    ctx.shadowBlur = 20;
+    ctx.shadowColor = C.orange;
+    ctx.strokeStyle = `rgba(255,107,0,${0.3 + 0.3 * Math.sin(t * Math.PI)})`;
+    ctx.lineWidth = 3;
+    ctx.strokeRect(h.x - 2, h.y - 2, h.w + 4, h.h + 4);
+    ctx.shadowBlur = 0;
+  }
+
+  if (flash) {
+    ctx.font = 'bold 13px Oswald';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = C.green;
+    ctx.fillText('✓ DELIVERED!', h.x + h.w / 2, h.y - 22);
+  }
+}
+
+function drawObstacle(obs) {
+  if (obs.type === 'dog') {
+    ctx.font = '22px serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('🐕', obs.x + obs.w / 2, obs.y + obs.h - 2);
+    return;
+  }
+  // Car body
+  ctx.fillStyle = obs.color;
+  ctx.fillRect(obs.x, obs.y + 6, obs.w, obs.h - 10);
+  ctx.fillRect(obs.x + 6, obs.y, obs.w - 12, obs.h - 2);
+  // Windshield
+  ctx.fillStyle = 'rgba(0,153,255,0.3)';
+  if (obs.vx > 0) {
+    ctx.fillRect(obs.x + obs.w - 14, obs.y + 2, 10, obs.h - 10);
+  } else {
+    ctx.fillRect(obs.x + 4, obs.y + 2, 10, obs.h - 10);
+  }
+  // Wheels
+  ctx.fillStyle = '#000';
+  ctx.beginPath(); ctx.arc(obs.x + 8, obs.y + obs.h - 2, 5, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.arc(obs.x + obs.w - 8, obs.y + obs.h - 2, 5, 0, Math.PI * 2); ctx.fill();
+}
+
+function drawPlayer() {
+  const px = player.x, py = player.y;
+  const bob = Math.sin(player.bobFrame) * 2;
+  const flip = player.dir === 'left';
+
+  ctx.save();
+  ctx.translate(px + player.w / 2, py + player.h / 2 + bob);
+  if (flip) ctx.scale(-1, 1);
+
+  // Shadow
+  ctx.fillStyle = 'rgba(0,0,0,0.4)';
+  ctx.ellipse(0, 14, 14, 5, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Bike wheels
+  ctx.strokeStyle = '#555';
+  ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.arc(-9, 10, 9, 0, Math.PI * 2); ctx.stroke();
+  ctx.beginPath(); ctx.arc(9, 10, 9, 0, Math.PI * 2); ctx.stroke();
+
+  // Bike frame
+  ctx.strokeStyle = C.orange;
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(-9, 10); ctx.lineTo(0, -2); ctx.lineTo(9, 10);
+  ctx.moveTo(0, -2); ctx.lineTo(0, 3);
+  ctx.moveTo(-3, 3); ctx.lineTo(3, 3);
+  ctx.stroke();
+
+  // Handlebar
+  ctx.strokeStyle = '#888';
+  ctx.beginPath(); ctx.moveTo(-4, -6); ctx.lineTo(4, -6); ctx.stroke();
+
+  // Rider body
+  ctx.fillStyle = C.orange;
+  ctx.fillRect(-5, -18, 10, 14);
+
+  // Rider head
+  ctx.fillStyle = '#f5c5a0';
+  ctx.beginPath(); ctx.arc(0, -22, 7, 0, Math.PI * 2); ctx.fill();
+
+  // Helmet
+  ctx.fillStyle = C.yellow;
+  ctx.beginPath(); ctx.arc(0, -24, 7, Math.PI, 0); ctx.fill();
+
+  // Box on back
+  if (boxCount > 0) {
+    ctx.fillStyle = C.yellow;
+    ctx.fillRect(-12, -16, 8, 8);
+    ctx.fillStyle = C.orange;
+    ctx.fillRect(-12, -18, 8, 3);
+  }
+
+  ctx.restore();
+}
+
+function loop() {
+  if (!gameRunning) return;
+  update();
+  draw();
+  requestAnimationFrame(loop);
+}
+
+// Initial draw
+initGame();
+ctx.fillStyle = C.dark2;
+ctx.fillRect(0, 0, W, H);
+</script>
+</body>
+</html>
