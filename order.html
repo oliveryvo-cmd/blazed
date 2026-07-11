@@ -134,12 +134,9 @@ footer a{color:var(--orange);text-decoration:none;font-family:'Courier Prime',mo
     <h2 class="section-title">YOUR ORDER</h2>
 
     <div class="form-card">
-      <form action="https://formsubmit.co/troungnvo@icloud.com" method="POST">
-        <input type="hidden" name="_subject" value="🔥 NEW B.L.A.Z.E.D BOX ORDER">
-        <input type="hidden" name="_next" value="thanks.html">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="box_type" id="boxTypeInput" value="Not selected">
-        <input type="hidden" name="box_price" id="boxPriceInput" value="">
+      <form id="orderForm">
+        <input type="hidden" id="boxTypeInput" value="Not selected">
+        <input type="hidden" id="boxPriceInput" value="">
 
         <span class="form-section-label">📦 THE BOX</span>
         <div class="form-group">
@@ -225,6 +222,35 @@ footer a{color:var(--orange);text-decoration:none;font-family:'Courier Prime',mo
 
         <button type="submit" class="submit-btn" id="submitBtn">🔥 PLACE YOUR ORDER</button>
       </form>
+<script>
+document.getElementById('orderForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const f = this;
+  const get = n => (f.querySelector('[name="'+n+'"]') || {}).value || '';
+  const boxType = document.getElementById('boxTypeInput').value;
+  const boxPrice = document.getElementById('boxPriceInput').value;
+  if (!boxType || boxType === 'Not selected') { alert('Please select a box first!'); return; }
+  const body =
+    'NEW B.L.A.Z.E.D BOX ORDER\n' +
+    '==========================\n\n' +
+    'BOX: ' + boxType + ' — ' + boxPrice + '\n\n' +
+    'KID INFO\n' +
+    'Name: ' + get('kid_name') + '\n' +
+    'Age: ' + get('kid_age') + '\n' +
+    'Disability: ' + (get('disability') || 'Not provided') + '\n' +
+    'About this kid: ' + (get('kid_info') || 'Not provided') + '\n\n' +
+    'DELIVERY\n' +
+    'Type: ' + get('delivery_type') + '\n' +
+    'Address: ' + get('address') + '\n' +
+    get('city') + ', ' + get('state_zip') + '\n\n' +
+    'CONTACT\n' +
+    'Name: ' + get('orderer_name') + '\n' +
+    'Email: ' + get('email') + '\n' +
+    'Phone: ' + (get('phone') || 'Not provided');
+  window.location.href = 'mailto:truongnvo@gmail.com?subject=' + encodeURIComponent('NEW B.L.A.Z.E.D BOX ORDER — ' + boxType) + '&body=' + encodeURIComponent(body);
+  setTimeout(function(){ window.location.href = 'thanks.html'; }, 1000);
+});
+</script>
     </div>
   </div>
 </div>
