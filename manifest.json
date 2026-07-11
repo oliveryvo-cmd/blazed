@@ -1,0 +1,20 @@
+{
+  "name": "B.L.A.Z.E.D — Joy Boxes for Disabled Kids",
+  "short_name": "B.L.A.Z.E.D",
+  "description": "Bringing Love And Zeal to Every Disabled Kid. Order surprise joy boxes, join the delivery crew, and play the game.",
+  "start_url": "/blazed/",
+  "display": "standalone",
+  "background_color": "#07090f",
+  "theme_color": "#ff6b00",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" },
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Order a Box", "url": "/blazed/order.html", "description": "Order a B.L.A.Z.E.D joy box" },
+    { "name": "Join the Crew", "url": "/blazed/join.html", "description": "Join the delivery crew" },
+    { "name": "Play the Game", "url": "/blazed/game.html", "description": "Play the B.L.A.Z.E.D delivery game" }
+  ]
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head><title>Generate Icons</title></head>
+<body style="background:#07090f;color:#fff;font-family:sans-serif;text-align:center;padding:40px;">
+<h2 style="color:#ff6b00;">Generating B.L.A.Z.E.D Icons...</h2>
+<canvas id="c192" width="192" height="192" style="display:none"></canvas>
+<canvas id="c512" width="512" height="512" style="display:none"></canvas>
+<p id="status" style="color:#a0aec0;">Click the buttons below to download the icons, then close this page.</p>
+<br>
+<a id="dl192" download="icon-192.png" style="background:#ff6b00;color:#000;padding:12px 32px;font-weight:bold;text-decoration:none;border-radius:6px;margin:8px;display:inline-block;">Download icon-192.png</a>
+<a id="dl512" download="icon-512.png" style="background:#ffd000;color:#000;padding:12px 32px;font-weight:bold;text-decoration:none;border-radius:6px;margin:8px;display:inline-block;">Download icon-512.png</a>
+<script>
+function drawIcon(canvas) {
+  const s = canvas.width;
+  const ctx = canvas.getContext('2d');
+  // Background
+  const grad = ctx.createRadialGradient(s/2, s/2, 0, s/2, s/2, s/2);
+  grad.addColorStop(0, '#1a0a00');
+  grad.addColorStop(1, '#07090f');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, s, s);
+  // Orange circle
+  ctx.fillStyle = '#ff6b00';
+  ctx.beginPath();
+  ctx.arc(s/2, s/2, s*0.42, 0, Math.PI*2);
+  ctx.fill();
+  // Inner dark circle
+  ctx.fillStyle = '#0d0500';
+  ctx.beginPath();
+  ctx.arc(s/2, s/2, s*0.36, 0, Math.PI*2);
+  ctx.fill();
+  // Fire emoji
+  ctx.font = `${s*0.42}px serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('🔥', s/2, s/2 + s*0.02);
+  // B.L.A.Z.E.D text
+  ctx.font = `bold ${s*0.09}px Oswald, Arial`;
+  ctx.fillStyle = '#ff6b00';
+  ctx.fillText('B.L.A.Z.E.D', s/2, s*0.88);
+}
+drawIcon(document.getElementById('c192'));
+drawIcon(document.getElementById('c512'));
+document.getElementById('dl192').href = document.getElementById('c192').toDataURL('image/png');
+document.getElementById('dl512').href = document.getElementById('c512').toDataURL('image/png');
+document.getElementById('status').textContent = 'Save both files to your Desktop/blazed folder, then delete this page.';
+</script>
+</body>
+</html>

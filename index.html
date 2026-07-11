@@ -4,6 +4,13 @@
 <meta charset="utf-8">
 <title>B.L.A.Z.E.D — Bringing Love And Zeal to Every Disabled Kid</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#ff6b00">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="B.L.A.Z.E.D">
+<link rel="apple-touch-icon" href="icon.svg">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Nunito:wght@400;600;700;800;900&family=Courier+Prime:wght@400;700&display=swap');
 
@@ -656,6 +663,11 @@ footer{background:var(--dark);border-top:4px solid transparent;border-image:line
 </footer>
 
 <script>
+// Register service worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+
 // Floating particles
 const container = document.getElementById('particles');
 const colors = ['#ff6b00','#ffd000','#0099ff','#ff4d6d','#00e676'];
