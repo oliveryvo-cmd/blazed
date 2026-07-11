@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Order Received — B.L.A.Z.E.D</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Nunito:wght@400;700;900&family=Courier+Prime&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--dark:#07090f;--orange:#ff6b00;--yellow:#ffd000;--blue:#0099ff;--coral:#ff4d6d;--green:#00e676;--white:#f8faff;--silver:#a0aec0;}
+body{background:var(--dark);color:var(--white);font-family:'Nunito',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 20px;overflow:hidden;position:relative;}
+
+/* CONFETTI */
+.confetti-piece{position:fixed;width:10px;height:10px;border-radius:2px;animation:confetti-fall linear infinite;}
+@keyframes confetti-fall{0%{transform:translateY(-100px) rotate(0deg);opacity:1;}100%{transform:translateY(110vh) rotate(720deg);opacity:0;}}
+
+.badge{background:rgba(255,107,0,0.1);border:1px solid var(--orange);padding:6px 28px;border-radius:100px;font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:4px;color:var(--orange);margin-bottom:24px;display:inline-block;position:relative;z-index:1;}
+.icon{font-size:100px;margin-bottom:24px;filter:drop-shadow(0 0 40px rgba(255,107,0,0.8));animation:pulse 2s ease-in-out infinite;display:block;position:relative;z-index:1;}
+@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.1);}}
+
+h1{font-family:'Oswald',sans-serif;font-size:clamp(32px,8vw,80px);letter-spacing:5px;margin-bottom:12px;position:relative;z-index:1;}
+h1 span{color:var(--orange);}
+.sub{font-size:17px;color:var(--silver);margin-bottom:48px;max-width:560px;line-height:1.7;position:relative;z-index:1;}
+.sub strong{color:var(--white);}
+
+.what-next{background:rgba(255,107,0,0.06);border:1px solid rgba(255,107,0,0.2);border-radius:16px;padding:32px 40px;max-width:500px;margin-bottom:40px;text-align:left;position:relative;z-index:1;}
+.what-next h3{font-family:'Oswald',sans-serif;font-size:18px;letter-spacing:3px;color:var(--orange);margin-bottom:20px;}
+.step{display:flex;gap:16px;margin-bottom:16px;align-items:flex-start;}
+.step:last-child{margin-bottom:0;}
+.step-num{font-family:'Oswald',sans-serif;font-size:20px;font-weight:700;color:var(--yellow);flex-shrink:0;width:28px;}
+.step-text h5{font-family:'Oswald',sans-serif;font-size:14px;letter-spacing:1px;color:var(--white);margin-bottom:2px;}
+.step-text p{font-size:13px;color:var(--silver);line-height:1.6;}
+
+.back{background:linear-gradient(135deg,var(--orange),var(--yellow));color:#000;padding:16px 48px;font-family:'Oswald',sans-serif;font-size:18px;letter-spacing:3px;font-weight:700;border-radius:8px;text-decoration:none;display:inline-block;transition:all .2s;position:relative;z-index:1;}
+.back:hover{transform:translateY(-2px);}
+</style>
+</head>
+<body>
+
+<span class="icon">🔥</span>
+<div class="badge">✅ ORDER RECEIVED — B.L.A.Z.E.D</div>
+<h1>BOX IS <span>COMING.</span></h1>
+<p class="sub">Oliver received your order. He's going to pack your box <strong>by hand</strong>, write a personal note, and get it to you as fast as possible.</p>
+
+<div class="what-next">
+  <h3>// WHAT HAPPENS NEXT</h3>
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-text"><h5>CHECK YOUR EMAIL</h5><p>Oliver's family will email you within 24 hours with payment details — Venmo or PayPal.</p></div>
+  </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-text"><h5>OLIVER PACKS YOUR BOX</h5><p>Once payment is confirmed, Oliver personally packs your box and writes the note by hand.</p></div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-text"><h5>IT GETS DELIVERED</h5><p>Ladera Ranch orders get bike delivery from Oliver himself. All others ship to your door.</p></div>
+  </div>
+</div>
+
+<a href="index.html" class="back">← BACK TO B.L.A.Z.E.D</a>
+
+<script>
+// Confetti
+const colors = ['#ff6b00','#ffd000','#0099ff','#ff4d6d','#00e676','#ffffff'];
+for(let i=0;i<80;i++){
+  const c = document.createElement('div');
+  c.className = 'confetti-piece';
+  c.style.cssText = `
+    left:${Math.random()*100}vw;
+    background:${colors[Math.floor(Math.random()*colors.length)]};
+    width:${Math.random()*12+4}px;
+    height:${Math.random()*12+4}px;
+    border-radius:${Math.random()>0.5?'50%':'2px'};
+    animation-duration:${Math.random()*3+2}s;
+    animation-delay:${Math.random()*3}s;
+  `;
+  document.body.appendChild(c);
+}
+</script>
+</body>
+</html>
