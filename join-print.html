@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Join the Crew — B.L.A.Z.E.D Print Form</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Courier+Prime:wght@400;700&family=Nunito:wght@400;700&display=swap');
+
+/* SCREEN ONLY */
+@media screen {
+  body{background:#07090f;display:flex;flex-direction:column;align-items:center;padding:40px 20px;font-family:'Nunito',sans-serif;}
+  .screen-header{text-align:center;margin-bottom:32px;}
+  .screen-header h1{font-family:'Oswald',sans-serif;font-size:36px;letter-spacing:4px;color:#ff6b00;margin-bottom:8px;}
+  .screen-header p{font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:3px;color:#444;}
+  .print-btn{background:linear-gradient(135deg,#ff6b00,#ffd000);color:#000;border:none;padding:16px 48px;font-family:'Oswald',sans-serif;font-size:20px;letter-spacing:3px;font-weight:700;border-radius:8px;cursor:pointer;margin-bottom:32px;}
+  .print-btn:hover{opacity:0.9;}
+  .back{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:3px;color:#444;text-decoration:none;display:block;text-align:center;margin-bottom:32px;}
+  .back:hover{color:#ff6b00;}
+  .page{background:#fff;box-shadow:0 8px 40px rgba(0,0,0,0.5);}
+}
+
+/* PRINT STYLES */
+@media print {
+  body{margin:0;padding:0;background:#fff;}
+  .screen-header,.print-btn,.back{display:none;}
+  .page{box-shadow:none;margin:0;padding:0;}
+  @page{margin:0.5in;}
+}
+
+/* PAGE */
+.page{width:8in;max-width:100%;padding:0.6in;color:#000;font-family:'Nunito',sans-serif;}
+
+.page-header{display:flex;align-items:center;justify-content:space-between;border-bottom:4px solid #ff6b00;padding-bottom:16px;margin-bottom:24px;}
+.brand{font-family:'Oswald',sans-serif;font-size:36px;font-weight:700;letter-spacing:6px;line-height:1;}
+.brand .b{color:#ff6b00;}.brand .l{color:#e6b800;}.brand .a{color:#0077cc;}.brand .z{color:#cc3355;}.brand .e{color:#008844;}.brand .d{color:#cc5500;}.brand .dot{color:#ccc;}
+.header-right{text-align:right;}
+.header-right .title{font-family:'Oswald',sans-serif;font-size:20px;letter-spacing:3px;color:#ff6b00;}
+.header-right .sub{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:2px;color:#999;margin-top:2px;}
+
+.section-label{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:4px;color:#ff6b00;margin-bottom:10px;margin-top:24px;display:block;}
+
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:16px;}
+.field-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px;}
+.field{margin-bottom:16px;}
+.field label{display:block;font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:3px;color:#666;margin-bottom:4px;}
+.field .line{border:none;border-bottom:1.5px solid #ccc;width:100%;height:28px;display:block;}
+.field .line-short{border:none;border-bottom:1.5px solid #ccc;width:60%;height:28px;display:block;}
+
+.divider{border:none;border-top:1px solid #e5e5e5;margin:20px 0;}
+
+/* RANKS */
+.ranks-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0 20px;}
+.rank-box{border:2px solid #eee;border-radius:8px;padding:12px 8px;text-align:center;}
+.rank-box.spark{border-color:#ff6b00;}
+.rank-box.blazer{border-color:#e6b800;}
+.rank-box.inferno{border-color:#0077cc;}
+.rank-box.legend{border-color:#cc3355;}
+.rank-icon{font-size:24px;display:block;margin-bottom:4px;}
+.rank-name{font-family:'Oswald',sans-serif;font-size:14px;letter-spacing:2px;}
+.rank-box.spark .rank-name{color:#ff6b00;}
+.rank-box.blazer .rank-name{color:#e6b800;}
+.rank-box.inferno .rank-name{color:#0077cc;}
+.rank-box.legend .rank-name{color:#cc3355;}
+.rank-req{font-family:'Courier Prime',monospace;font-size:8px;letter-spacing:1px;color:#999;margin-top:2px;}
+
+/* PLEDGE */
+.pledge-box{border:2px solid #ff6b00;border-radius:8px;padding:16px 20px;margin:16px 0;background:#fffaf5;}
+.pledge-box p{font-size:12px;line-height:1.8;color:#333;}
+.pledge-box strong{color:#ff6b00;}
+
+/* SIGNATURE */
+.sig-row{display:grid;grid-template-columns:2fr 1fr;gap:24px;margin-top:16px;}
+.sig-field label{display:block;font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:3px;color:#666;margin-bottom:4px;}
+.sig-line{border:none;border-bottom:2px solid #000;width:100%;height:36px;display:block;}
+
+/* FOOTER */
+.page-footer{margin-top:28px;padding-top:12px;border-top:2px solid #ff6b00;display:flex;justify-content:space-between;align-items:center;}
+.page-footer .ft{font-family:'Courier Prime',monospace;font-size:8px;letter-spacing:2px;color:#aaa;}
+.page-footer .url{font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:1px;color:#ff6b00;}
+
+/* CHECKBOX */
+.check-row{display:flex;align-items:flex-start;gap:10px;margin:10px 0;}
+.check-row .box{width:14px;height:14px;border:2px solid #999;flex-shrink:0;margin-top:1px;}
+.check-row span{font-size:11px;color:#333;line-height:1.6;}
+
+/* OFFICE USE */
+.office-box{border:2px dashed #ccc;border-radius:8px;padding:14px 18px;margin-top:16px;background:#fafafa;}
+.office-box .ot{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:3px;color:#ccc;margin-bottom:10px;}
+.office-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+</style>
+</head>
+<body>
+
+<div class="screen-header">
+  <h1>JOIN THE CREW — PRINT FORM</h1>
+  <p>// PRINT THIS OUT · FILL BY HAND · GIVE TO OLIVER</p>
+</div>
+<button class="print-btn" onclick="window.print()">🖨️ PRINT THE FORM</button>
+<a href="join.html" class="back">← BACK TO JOIN PAGE</a>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <div class="brand">
+      <span class="b">B</span><span class="dot">.</span><span class="l">L</span><span class="dot">.</span><span class="a">A</span><span class="dot">.</span><span class="z">Z</span><span class="dot">.</span><span class="e">E</span><span class="dot">.</span><span class="d">D</span>
+    </div>
+    <div class="header-right">
+      <div class="title">🚲 DELIVERY CREW SIGN-UP</div>
+      <div class="sub">BRINGING LOVE AND ZEAL TO EVERY DISABLED KID</div>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <p style="font-size:12px;color:#555;line-height:1.7;margin-bottom:4px;">Join the B.L.A.Z.E.D delivery crew and help Oliver get joy boxes to disabled kids. Fill out this form and hand it to Oliver. You start at <strong>Spark rank</strong> and rank up the more boxes you deliver.</p>
+
+  <!-- RANKS -->
+  <span class="section-label">// THE RANKS — YOU START AT SPARK</span>
+  <div class="ranks-row">
+    <div class="rank-box spark">
+      <span class="rank-icon">✦</span>
+      <div class="rank-name">SPARK</div>
+      <div class="rank-req">0 deliveries</div>
+    </div>
+    <div class="rank-box blazer">
+      <span class="rank-icon">🔥</span>
+      <div class="rank-name">BLAZER</div>
+      <div class="rank-req">5+ deliveries</div>
+    </div>
+    <div class="rank-box inferno">
+      <span class="rank-icon">⚡</span>
+      <div class="rank-name">INFERNO</div>
+      <div class="rank-req">15+ deliveries</div>
+    </div>
+    <div class="rank-box legend">
+      <span class="rank-icon">👑</span>
+      <div class="rank-name">LEGEND</div>
+      <div class="rank-req">30+ deliveries</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT YOU -->
+  <span class="section-label">// ABOUT YOU</span>
+  <div class="field-row">
+    <div class="field"><label>FIRST NAME</label><div class="line"></div></div>
+    <div class="field"><label>LAST NAME</label><div class="line"></div></div>
+  </div>
+  <div class="field-row-3">
+    <div class="field"><label>AGE</label><div class="line"></div></div>
+    <div class="field"><label>CITY</label><div class="line"></div></div>
+    <div class="field"><label>NEIGHBORHOOD / AREA</label><div class="line"></div></div>
+  </div>
+  <div class="field"><label>PARENT / GUARDIAN EMAIL</label><div class="line"></div></div>
+  <div class="field"><label>PHONE (optional — for delivery coordination)</label><div class="line"></div></div>
+
+  <div class="divider"></div>
+
+  <!-- HOW YOU DELIVER -->
+  <span class="section-label">// HOW WILL YOU DELIVER?</span>
+  <p style="font-size:11px;color:#888;margin-bottom:10px;font-family:'Courier Prime',monospace;letter-spacing:1px;">CHECK ALL THAT APPLY</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px;">
+    <div class="check-row"><div class="box"></div><span>🚲 &nbsp;Bike — I ride my bike</span></div>
+    <div class="check-row"><div class="box"></div><span>🚶 &nbsp;Walking — I walk deliveries</span></div>
+    <div class="check-row"><div class="box"></div><span>🚗 &nbsp;Parent drives me</span></div>
+    <div class="check-row"><div class="box"></div><span>⚡ &nbsp;Scooter / electric</span></div>
+  </div>
+  <div class="field"><label>AREA YOU CAN DELIVER IN (streets, neighborhoods, miles)</label><div class="line"></div></div>
+  <div class="field"><label>HOW MANY DAYS PER WEEK CAN YOU DELIVER?</label><div class="line-short"></div></div>
+
+  <div class="divider"></div>
+
+  <!-- WHY -->
+  <span class="section-label">// WHY DO YOU WANT TO JOIN THE CREW? (optional)</span>
+  <div style="border-bottom:1.5px solid #ccc;min-height:48px;margin-bottom:8px;"></div>
+  <div style="border-bottom:1.5px solid #ccc;min-height:32px;"></div>
+
+  <div class="divider"></div>
+
+  <!-- PLEDGE -->
+  <span class="section-label">// THE DELIVERY CREW PLEDGE</span>
+  <div class="pledge-box">
+    <p>"I am joining the <strong>B.L.A.Z.E.D Delivery Crew</strong>. I promise to show up, deliver joy boxes to disabled kids with care and respect, and represent B.L.A.Z.E.D with pride. I will do my best to rank up — and I know every delivery I make changes a kid's day."</p>
+  </div>
+
+  <!-- SIGNATURE -->
+  <div class="sig-row">
+    <div class="sig-field">
+      <label>SIGNATURE — SIGN YOUR NAME HERE</label>
+      <div class="sig-line"></div>
+    </div>
+    <div class="sig-field">
+      <label>DATE</label>
+      <div class="sig-line"></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- OFFICE USE -->
+  <div class="office-box">
+    <div class="ot">// FOR OLIVER'S USE ONLY</div>
+    <div class="office-row">
+      <div class="field"><label>DATE RECEIVED</label><div class="line"></div></div>
+      <div class="field"><label>STARTING RANK</label><div class="line"></div></div>
+      <div class="field"><label>CREW ID #</label><div class="line"></div></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="page-footer">
+    <span class="ft">B.L.A.Z.E.D — FOUNDED BY OLIVER VO, AGE 10 — LADERA RANCH, CA — 2026</span>
+    <span class="url">oliveryvo-cmd.github.io/blazed</span>
+  </div>
+
+</div>
+</body>
+</html>
