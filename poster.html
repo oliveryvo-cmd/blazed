@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>B.L.A.Z.E.D Poster — Print</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700;900&family=Courier+Prime:wght@400;700&family=Nunito:wght@400;700;900&display=swap');
+
+@media screen {
+  body{background:#07090f;display:flex;flex-direction:column;align-items:center;padding:40px 20px;font-family:'Nunito',sans-serif;}
+  .screen-header{text-align:center;margin-bottom:24px;}
+  .screen-header h1{font-family:'Oswald',sans-serif;font-size:32px;letter-spacing:4px;color:#ff6b00;margin-bottom:6px;}
+  .screen-header p{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:3px;color:#444;}
+  .print-btn{background:linear-gradient(135deg,#ff6b00,#ffd000);color:#000;border:none;padding:14px 48px;font-family:'Oswald',sans-serif;font-size:20px;letter-spacing:3px;font-weight:700;border-radius:8px;cursor:pointer;margin-bottom:24px;}
+  .back{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:3px;color:#444;text-decoration:none;display:block;text-align:center;margin-bottom:32px;}
+  .back:hover{color:#ff6b00;}
+  .page{box-shadow:0 8px 60px rgba(0,0,0,0.8);}
+}
+
+@media print {
+  body{margin:0;padding:0;}
+  .screen-header,.print-btn,.back{display:none;}
+  .page{box-shadow:none;margin:0;}
+  @page{margin:0;size:letter;}
+}
+
+.page{
+  width:8.5in;max-width:100%;
+  min-height:11in;
+  background:#07090f;
+  color:#f8faff;
+  font-family:'Nunito',sans-serif;
+  display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+  padding:0.5in 0.6in;
+  position:relative;
+  overflow:hidden;
+}
+
+/* BG decoration */
+.bg-glow{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;}
+.bg1{width:400px;height:400px;background:rgba(255,107,0,0.15);top:-100px;left:-100px;}
+.bg2{width:300px;height:300px;background:rgba(255,208,0,0.1);bottom:-50px;right:-50px;}
+
+.top{text-align:center;position:relative;z-index:1;}
+.brand{font-family:'Oswald',sans-serif;font-size:72px;font-weight:900;letter-spacing:10px;line-height:1;}
+.brand .b{color:#ff6b00;}.brand .l{color:#ffd000;}.brand .a{color:#0099ff;}.brand .z{color:#ff4d6d;}.brand .e{color:#00e676;}.brand .d{color:#ff8c38;}.brand .dot{color:#333;}
+.tagline{font-family:'Oswald',sans-serif;font-size:16px;letter-spacing:6px;color:#444;margin-top:4px;}
+.headline{font-family:'Oswald',sans-serif;font-size:42px;font-weight:900;letter-spacing:3px;line-height:1.1;margin-top:20px;}
+.headline .o{color:#ff6b00;}
+.sub{font-size:15px;color:#a0aec0;max-width:5in;margin:12px auto 0;line-height:1.7;}
+
+.middle{display:flex;align-items:center;justify-content:center;gap:0.5in;position:relative;z-index:1;width:100%;}
+
+.qr-box{background:#fff;border-radius:16px;padding:16px;display:flex;flex-direction:column;align-items:center;gap:8px;flex-shrink:0;}
+.qr-label{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:3px;color:#ff6b00;}
+#qrcode{width:200px;height:200px;}
+
+.info{display:flex;flex-direction:column;gap:14px;max-width:3.2in;}
+.info-item{display:flex;align-items:flex-start;gap:12px;}
+.info-icon{font-size:28px;flex-shrink:0;margin-top:2px;}
+.info-text h4{font-family:'Oswald',sans-serif;font-size:16px;letter-spacing:2px;color:#ff6b00;margin-bottom:2px;}
+.info-text p{font-size:12px;color:#a0aec0;line-height:1.5;}
+
+.bottom{text-align:center;position:relative;z-index:1;width:100%;}
+.url-big{font-family:'Oswald',sans-serif;font-size:28px;font-weight:700;letter-spacing:4px;color:#ff6b00;display:block;margin-bottom:8px;}
+.divider{border:none;border-top:2px solid #1a2030;margin:12px 0;}
+.footer-row{display:flex;justify-content:space-between;align-items:center;}
+.footer-left{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:2px;color:#333;text-align:left;}
+.footer-right{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:2px;color:#333;text-align:right;}
+.orange{color:#ff6b00;}
+</style>
+</head>
+<body>
+
+<div class="screen-header">
+  <h1>B.L.A.Z.E.D POSTER</h1>
+  <p>// PRINT AND PUT IT EVERYWHERE</p>
+</div>
+<button class="print-btn" onclick="window.print()">🖨️ PRINT THE POSTER</button>
+<a href="index.html" class="back">← BACK TO B.L.A.Z.E.D</a>
+
+<div class="page">
+  <div class="bg-glow bg1"></div>
+  <div class="bg-glow bg2"></div>
+
+  <div class="top">
+    <div class="brand">
+      <span class="b">B</span><span class="dot">.</span><span class="l">L</span><span class="dot">.</span><span class="a">A</span><span class="dot">.</span><span class="z">Z</span><span class="dot">.</span><span class="e">E</span><span class="dot">.</span><span class="d">D</span>
+    </div>
+    <div class="tagline">BRINGING LOVE AND ZEAL TO EVERY DISABLED KID</div>
+    <div class="headline">SURPRISE JOY BOXES<br>FOR <span class="o">DISABLED KIDS.</span></div>
+    <p class="sub">Founded by Oliver Vo, age 10, Ladera Ranch, CA. Every box packed by hand. Every note written personally. Free bike delivery in Ladera Ranch.</p>
+  </div>
+
+  <div class="middle">
+    <div class="qr-box">
+      <div class="qr-label">SCAN TO ORDER</div>
+      <canvas id="qrcode"></canvas>
+      <div class="qr-label">OR JOIN THE CREW</div>
+    </div>
+    <div class="info">
+      <div class="info-item">
+        <div class="info-icon">📦</div>
+        <div class="info-text">
+          <h4>4 BOX SIZES</h4>
+          <p>Spark $15 · Blaze $30 · Inferno $50 · Legend $100. All packed by hand with real toys, slime, figures, and a handwritten note.</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🚲</div>
+        <div class="info-text">
+          <h4>FREE BIKE DELIVERY</h4>
+          <p>Oliver delivers in Ladera Ranch by bike — free. Ships anywhere in the USA.</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🚲</div>
+        <div class="info-text">
+          <h4>JOIN THE DELIVERY CREW</h4>
+          <p>Help Oliver deliver boxes. Start at Spark rank. Rank up to B.L.A.Z.E.D Legend — 100 ranks total.</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">💛</div>
+        <div class="info-text">
+          <h4>PAY BY CASH, VENMO, OR PAYPAL</h4>
+          <p>Oliver's family contacts you after ordering. No payment needed upfront.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <span class="url-big">oliveryvo-cmd.github.io/blazed</span>
+    <div class="divider"></div>
+    <div class="footer-row">
+      <div class="footer-left">FOUNDED BY <span class="orange">OLIVER VO</span>, AGE 10 · LADERA RANCH, CA · 2026</div>
+      <div class="footer-right">ORDER A BOX · JOIN THE CREW · PLAY THE GAME</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Simple QR code generator (pure JS, no library needed)
+// Using a minimal QR implementation for the URL
+function drawQR(canvas, text) {
+  // Use QR code via API approach - draw placeholder with URL text
+  const ctx = canvas.getContext('2d');
+  const size = 200;
+  canvas.width = size;
+  canvas.height = size;
+
+  // We'll use a Google Charts QR approach via image
+  const img = new Image();
+  img.crossOrigin = 'anonymous';
+  img.onload = function() {
+    ctx.drawImage(img, 0, 0, size, size);
+  };
+  img.onerror = function() {
+    // Fallback: just show the URL as text
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, size, size);
+    ctx.fillStyle = '#000';
+    ctx.font = 'bold 9px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('oliveryvo-cmd', size/2, size/2 - 10);
+    ctx.fillText('.github.io/blazed', size/2, size/2 + 10);
+  };
+  // Use a QR code generator API
+  img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(text) + '&color=000000&bgcolor=ffffff&margin=4';
+}
+
+drawQR(document.getElementById('qrcode'), 'https://oliveryvo-cmd.github.io/blazed');
+</script>
+</body>
+</html>
