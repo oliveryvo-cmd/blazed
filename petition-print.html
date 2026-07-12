@@ -111,7 +111,14 @@ td.date{width:12%;}
 
 <script>
 const tbody = document.getElementById('rows');
-for (let i = 1; i <= 50; i++) {
+for (let i = 1; i <= 100; i++) {
+  if (i === 51) {
+    // Page break row
+    const br = document.createElement('tr');
+    br.style.pageBreakAfter = 'always';
+    br.innerHTML = '<td colspan="6" style="page-break-after:always;border:none;height:0;padding:0;"></td>';
+    tbody.appendChild(br);
+  }
   const tr = document.createElement('tr');
   tr.innerHTML = `
     <td class="num">${i}</td>
