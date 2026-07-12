@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Hall of Fame — B.L.A.Z.E.D</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700;900&family=Courier+Prime:wght@400;700&family=Nunito:wght@400;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--dark:#07090f;--dark2:#0d1220;--orange:#ff6b00;--yellow:#ffd000;--blue:#0099ff;--coral:#ff4d6d;--green:#00e676;--white:#f8faff;--silver:#a0aec0;}
+body{background:var(--dark);color:var(--white);font-family:'Nunito',sans-serif;min-height:100vh;}
+
+nav{background:rgba(7,9,15,0.97);border-bottom:4px solid transparent;border-image:linear-gradient(90deg,var(--orange),var(--yellow),var(--blue)) 1;padding:0 48px;display:flex;align-items:center;justify-content:space-between;height:72px;}
+.nav-brand{font-family:'Oswald',sans-serif;font-size:22px;font-weight:700;letter-spacing:5px;}
+.nav-brand .b{color:var(--orange);}.nav-brand .l{color:var(--yellow);}.nav-brand .a{color:var(--blue);}.nav-brand .z{color:var(--coral);}.nav-brand .e{color:var(--green);}.nav-brand .d{color:#ff8c38;}.nav-brand .dot{color:#333;}
+.nav-back{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:2px;color:#444;text-decoration:none;}
+.nav-back:hover{color:var(--orange);}
+
+.hero{padding:80px 48px 60px;text-align:center;background:radial-gradient(ellipse at 50% 0%,rgba(255,208,0,0.12),transparent 60%);}
+.eyebrow{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:5px;color:var(--yellow);margin-bottom:16px;display:block;}
+h1{font-family:'Oswald',sans-serif;font-size:clamp(40px,7vw,80px);font-weight:900;letter-spacing:4px;line-height:1;margin-bottom:16px;}
+h1 span{color:var(--yellow);}
+.hero-sub{font-size:17px;color:var(--silver);max-width:600px;margin:0 auto;line-height:1.8;}
+
+.podium-wrap{padding:60px 48px 20px;max-width:900px;margin:0 auto;}
+.podium{display:flex;align-items:flex-end;justify-content:center;gap:16px;margin-bottom:60px;}
+
+.podium-slot{display:flex;flex-direction:column;align-items:center;gap:12px;}
+.podium-avatar{border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;border:3px solid;}
+.podium-slot.p1 .podium-avatar{width:90px;height:90px;border-color:var(--yellow);background:rgba(255,208,0,0.1);}
+.podium-slot.p2 .podium-avatar{width:72px;height:72px;border-color:var(--silver);background:rgba(160,174,192,0.1);}
+.podium-slot.p3 .podium-avatar{width:64px;height:64px;border-color:#cd7f32;background:rgba(205,127,50,0.1);}
+.podium-name{font-family:'Oswald',sans-serif;font-size:15px;letter-spacing:2px;text-align:center;}
+.podium-rank{font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:2px;color:#444;text-align:center;}
+.podium-deliveries{font-family:'Oswald',sans-serif;font-size:13px;color:var(--orange);}
+
+.podium-block{border-radius:12px 12px 0 0;width:120px;display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-weight:900;}
+.podium-slot.p1 .podium-block{height:120px;background:linear-gradient(180deg,rgba(255,208,0,0.2),rgba(255,208,0,0.05));border:2px solid rgba(255,208,0,0.3);font-size:40px;color:var(--yellow);}
+.podium-slot.p2 .podium-block{height:80px;background:linear-gradient(180deg,rgba(160,174,192,0.15),rgba(160,174,192,0.03));border:2px solid rgba(160,174,192,0.2);font-size:32px;color:var(--silver);}
+.podium-slot.p3 .podium-block{height:56px;background:linear-gradient(180deg,rgba(205,127,50,0.15),rgba(205,127,50,0.03));border:2px solid rgba(205,127,50,0.2);font-size:28px;color:#cd7f32;}
+
+.crew-section{padding:0 48px 80px;max-width:900px;margin:0 auto;}
+.section-title{font-family:'Oswald',sans-serif;font-size:24px;letter-spacing:4px;color:var(--orange);margin-bottom:24px;}
+.crew-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;}
+.crew-card{background:var(--dark2);border:1px solid #1a2030;border-radius:16px;padding:20px;display:flex;align-items:center;gap:16px;transition:border-color .2s;}
+.crew-card:hover{border-color:rgba(255,107,0,0.3);}
+.crew-emoji{font-size:28px;flex-shrink:0;}
+.crew-info{}
+.crew-name{font-family:'Oswald',sans-serif;font-size:15px;letter-spacing:1px;color:var(--white);}
+.crew-rank{font-family:'Courier Prime',monospace;font-size:8px;letter-spacing:2px;color:var(--orange);margin-top:2px;}
+.crew-deliveries{font-size:12px;color:#444;margin-top:2px;}
+
+.empty{text-align:center;padding:60px 20px;}
+.empty-icon{font-size:64px;margin-bottom:16px;display:block;}
+.empty h3{font-family:'Oswald',sans-serif;font-size:24px;letter-spacing:3px;color:#333;margin-bottom:8px;}
+.empty p{font-size:14px;color:#333;line-height:1.7;}
+.empty a{color:var(--orange);text-decoration:none;}
+
+@media(max-width:600px){
+  nav,.hero,.podium-wrap,.crew-section{padding-left:20px;padding-right:20px;}
+  .podium-block{width:90px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand"><span class="b">B</span><span class="dot">.</span><span class="l">L</span><span class="dot">.</span><span class="a">A</span><span class="dot">.</span><span class="z">Z</span><span class="dot">.</span><span class="e">E</span><span class="dot">.</span><span class="d">D</span></div>
+  <a href="index.html" class="nav-back">← BACK TO HOME</a>
+</nav>
+
+<div class="hero">
+  <span class="eyebrow">// HALL OF FAME</span>
+  <h1>THE BEST OF<br><span>THE CREW.</span></h1>
+  <p class="hero-sub">These are the B.L.A.Z.E.D delivery crew members who have delivered the most joy. Every delivery matters. Every disabled kid they reached felt something real.</p>
+</div>
+
+<div class="podium-wrap">
+  <div class="podium" id="podium"></div>
+</div>
+
+<div class="crew-section">
+  <div class="section-title">// ALL CREW MEMBERS</div>
+  <div class="crew-grid" id="crewGrid"></div>
+</div>
+
+<script>
+// Hall of fame members — Oliver updates this list
+const CREW = [
+  { name: 'Oliver Vo', rank: 'B.L.A.Z.E.D Legend', emoji: '👑', deliveries: 1 },
+  // Add more crew members here as they join and deliver!
+];
+
+const podium = document.getElementById('podium');
+const grid = document.getElementById('crewGrid');
+
+const sorted = [...CREW].sort((a,b) => b.deliveries - a.deliveries);
+
+if (sorted.length === 0) {
+  podium.innerHTML = '';
+  grid.innerHTML = `<div class="empty" style="grid-column:1/-1"><span class="empty-icon">🚲</span><h3>NO ONE YET</h3><p>Be the first! <a href="join.html">Join the delivery crew</a> and start delivering boxes.</p></div>`;
+} else {
+  // Podium — top 3
+  const podiumOrder = [sorted[1], sorted[0], sorted[2]].filter(Boolean);
+  const podiumClass = ['p2','p1','p3'];
+  const podiumNum = ['2','1','3'];
+  const podiumH = [80,120,56];
+
+  podiumOrder.forEach((m, i) => {
+    if (!m) return;
+    const cls = podiumClass[i];
+    const num = podiumNum[i];
+    const slot = document.createElement('div');
+    slot.className = 'podium-slot ' + cls;
+    slot.innerHTML = `
+      <div class="podium-name">${m.name}</div>
+      <div class="podium-rank">${m.rank}</div>
+      <div class="podium-deliveries">${m.deliveries} box${m.deliveries!==1?'es':''}</div>
+      <div class="podium-avatar">${m.emoji}</div>
+      <div class="podium-block">${num}</div>
+    `;
+    podium.appendChild(slot);
+  });
+
+  // All crew
+  sorted.forEach(m => {
+    const card = document.createElement('div');
+    card.className = 'crew-card';
+    card.innerHTML = `
+      <div class="crew-emoji">${m.emoji}</div>
+      <div class="crew-info">
+        <div class="crew-name">${m.name}</div>
+        <div class="crew-rank">${m.rank}</div>
+        <div class="crew-deliveries">${m.deliveries} box${m.deliveries!==1?'es':''} delivered</div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+</script>
+</body>
+</html>
