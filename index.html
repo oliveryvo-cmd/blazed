@@ -144,7 +144,7 @@ nav{background:rgba(7,9,15,0.97);border-bottom:4px solid transparent;border-imag
 
 /* ── THE BOXES ── */
 .boxes{padding:100px 48px;background:var(--dark);}
-.boxes-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:60px;}
+.boxes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:60px;}
 .box-card{border-radius:20px;padding:36px 28px;position:relative;overflow:hidden;transition:transform .3s;display:flex;flex-direction:column;}
 .box-card:hover{transform:translateY(-8px);}
 .box-card.spark{background:linear-gradient(160deg,#1a0f00,#0d0700);border:2px solid rgba(255,107,0,0.3);}
@@ -401,8 +401,21 @@ footer{background:var(--dark);border-top:4px solid transparent;border-image:line
     <span class="section-eyebrow">// THE BOXES</span>
     <h2 class="section-title">PICK YOUR BOX.</h2>
     <div class="section-line"></div>
-    <p class="section-desc">Four sizes. All packed by hand. All delivered with love. The bigger the box, the more joy inside.</p>
+    <p class="section-desc">Six sizes. All packed by hand. All delivered with love. The bigger the box, the more joy inside.</p>
     <div class="boxes-grid">
+
+      <div class="box-card spark" style="border-color:rgba(0,230,118,0.3);">
+        <span class="box-icon">🌱</span>
+        <div class="box-name" style="color:#00e676;">MINI</div>
+        <div class="box-price" style="color:#00e676;">$5</div>
+        <hr class="box-divider">
+        <ul class="box-items">
+          <li>1 small surprise toy</li>
+          <li>Handwritten note from Oliver</li>
+          <li>B.L.A.Z.E.D sticker</li>
+        </ul>
+        <a href="order.html?box=mini" class="box-btn" style="background:linear-gradient(135deg,#00e676,#00b359);">🌱 ORDER MINI</a>
+      </div>
 
       <div class="box-card spark">
         <span class="box-icon">✦</span>
@@ -467,6 +480,26 @@ footer{background:var(--dark);border-top:4px solid transparent;border-image:line
           <li>B.L.A.Z.E.D membership card</li>
         </ul>
         <a href="order.html?box=legend" class="box-btn">👑 ORDER LEGEND</a>
+      </div>
+
+      <div class="box-card legend" style="border-color:rgba(138,43,226,0.4);background:linear-gradient(160deg,#0d0014,#07000f);">
+        <span class="box-popular" style="background:rgba(138,43,226,0.15);border:1px solid #8a2be2;color:#8a2be2;">🔱 GOD TIER</span>
+        <span class="box-icon">🔱</span>
+        <div class="box-name" style="color:#8a2be2;">ULTIMATE</div>
+        <div class="box-price" style="color:#8a2be2;">$200</div>
+        <hr class="box-divider">
+        <ul class="box-items">
+          <li>15+ surprise toys</li>
+          <li>Long handwritten letter from Oliver</li>
+          <li>Everything in the Legend box</li>
+          <li>Ultra rare Labubu figure</li>
+          <li>Full slime + Nee Doh + fidget collection</li>
+          <li>3 Mini Brands packs</li>
+          <li>Video message from Oliver personally</li>
+          <li>B.L.A.Z.E.D gold membership card</li>
+          <li>Secret ultimate item — never seen before</li>
+        </ul>
+        <a href="order.html?box=ultimate" class="box-btn" style="background:linear-gradient(135deg,#8a2be2,#4b0082);color:#fff;">🔱 ORDER ULTIMATE</a>
       </div>
 
     </div>
