@@ -30,35 +30,17 @@ h1 span{color:var(--orange);}
 
 /* RANKS */
 .ranks{padding:80px 40px;background:var(--dark2);border-top:1px solid #0d1220;}
-.container{max-width:1000px;margin:0 auto;}
+.container{max-width:1100px;margin:0 auto;}
 .section-eyebrow{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:5px;color:var(--orange);margin-bottom:16px;display:block;}
 .section-title{font-family:'Oswald',sans-serif;font-size:clamp(28px,4vw,48px);font-weight:700;letter-spacing:3px;margin-bottom:16px;}
-.section-line{width:80px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--orange),var(--yellow));margin-bottom:48px;}
-
-.ranks-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
-.rank-card{border-radius:16px;padding:28px 20px;text-align:center;border:2px solid #0d1220;background:var(--dark);position:relative;overflow:hidden;transition:transform .2s;}
-.rank-card:hover{transform:translateY(-4px);}
-.rank-card.spark{border-color:rgba(255,107,0,0.4);}
-.rank-card.blazer{border-color:rgba(255,208,0,0.4);}
-.rank-card.inferno{border-color:rgba(0,153,255,0.4);}
-.rank-card.legend{border-color:rgba(255,77,109,0.4);}
-.rank-glow{position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:100px;height:100px;border-radius:50%;filter:blur(40px);opacity:0.3;}
-.rank-card.spark .rank-glow{background:var(--orange);}
-.rank-card.blazer .rank-glow{background:var(--yellow);}
-.rank-card.inferno .rank-glow{background:var(--blue);}
-.rank-card.legend .rank-glow{background:var(--coral);}
-.rank-icon{font-size:56px;display:block;margin-bottom:12px;position:relative;}
-.rank-name{font-family:'Oswald',sans-serif;font-size:24px;font-weight:700;letter-spacing:3px;margin-bottom:8px;}
-.rank-card.spark .rank-name{color:var(--orange);}
-.rank-card.blazer .rank-name{color:var(--yellow);}
-.rank-card.inferno .rank-name{color:var(--blue);}
-.rank-card.legend .rank-name{color:var(--coral);}
-.rank-req{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:2px;margin-bottom:12px;}
-.rank-card.spark .rank-req{color:rgba(255,107,0,0.7);}
-.rank-card.blazer .rank-req{color:rgba(255,208,0,0.7);}
-.rank-card.inferno .rank-req{color:rgba(0,153,255,0.7);}
-.rank-card.legend .rank-req{color:rgba(255,77,109,0.7);}
-.rank-desc{font-size:13px;color:var(--silver);line-height:1.6;}
+.section-line{width:80px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--orange),var(--yellow));margin-bottom:32px;}
+.ranks-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;}
+.rank-card{border-radius:12px;padding:14px 10px;text-align:center;border:1px solid #0d1220;background:var(--dark);transition:transform .2s,border-color .2s;}
+.rank-card:hover{transform:translateY(-3px);border-color:var(--orange);}
+.rank-num{font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:2px;color:#333;margin-bottom:4px;}
+.rank-icon{font-size:28px;display:block;margin-bottom:6px;}
+.rank-name{font-family:'Oswald',sans-serif;font-size:12px;letter-spacing:1px;color:var(--white);margin-bottom:4px;line-height:1.2;}
+.rank-req{font-family:'Courier Prime',monospace;font-size:8px;letter-spacing:1px;color:#444;}
 
 /* HOW IT WORKS */
 .how{padding:80px 40px;}
@@ -106,38 +88,9 @@ footer a{color:var(--orange);text-decoration:none;font-family:'Courier Prime',mo
 <div class="ranks">
   <div class="container">
     <span class="section-eyebrow">// THE RANKS</span>
-    <h2 class="section-title">RANK UP AS YOU DELIVER</h2>
+    <h2 class="section-title">100 RANKS. RANK UP AS YOU DELIVER.</h2>
     <div class="section-line"></div>
-    <div class="ranks-grid">
-      <div class="rank-card spark">
-        <div class="rank-glow"></div>
-        <span class="rank-icon">✦</span>
-        <div class="rank-name">SPARK</div>
-        <div class="rank-req">0 DELIVERIES</div>
-        <p class="rank-desc">You just joined the crew. Every legend starts here.</p>
-      </div>
-      <div class="rank-card blazer">
-        <div class="rank-glow"></div>
-        <span class="rank-icon">🔥</span>
-        <div class="rank-name">BLAZER</div>
-        <div class="rank-req">5+ DELIVERIES</div>
-        <p class="rank-desc">You're on fire. You've shown up and made kids smile.</p>
-      </div>
-      <div class="rank-card inferno">
-        <div class="rank-glow"></div>
-        <span class="rank-icon">⚡</span>
-        <div class="rank-name">INFERNO</div>
-        <div class="rank-req">15+ DELIVERIES</div>
-        <p class="rank-desc">You're one of the best. The crew counts on you.</p>
-      </div>
-      <div class="rank-card legend">
-        <div class="rank-glow"></div>
-        <span class="rank-icon">👑</span>
-        <div class="rank-name">LEGEND</div>
-        <div class="rank-req">30+ DELIVERIES</div>
-        <p class="rank-desc">Top of the crew. You've delivered more joy than anyone.</p>
-      </div>
-    </div>
+    <div class="ranks-grid" id="ranksGrid"></div>
   </div>
 </div>
 
@@ -165,7 +118,7 @@ footer a{color:var(--orange);text-decoration:none;font-family:'Courier Prime',mo
         <div class="step-num">3</div>
         <div class="step-text">
           <h4>RANK UP</h4>
-          <p>Hit 5 deliveries and you become a Blazer. Hit 15 and you're Inferno. Hit 30 and you're a Legend — the top of the crew.</p>
+          <p>There are 100 ranks — from Spark Deliverer all the way to B.L.A.Z.E.D Legend. Every delivery moves you up. Can you reach rank 100?</p>
         </div>
       </div>
     </div>
@@ -236,6 +189,54 @@ footer a{color:var(--orange);text-decoration:none;font-family:'Courier Prime',mo
 <footer><a href="index.html">← BACK TO B.L.A.Z.E.D</a></footer>
 
 <script>
+const RANKS = [
+  {n:'Spark Deliverer',i:'✦'},{n:'Ignite Deliverer',i:'🔆'},{n:'Flicker Deliverer',i:'🕯️'},{n:'Ember Deliverer',i:'🌋'},{n:'Glow Deliverer',i:'💡'},
+  {n:'Blaze Deliverer',i:'🔥'},{n:'Torch Deliverer',i:'🔦'},{n:'Flame Deliverer',i:'🌶️'},{n:'Inferno Deliverer',i:'⚡'},{n:'Wildfire Deliverer',i:'🌪️'},
+  {n:'Storm Deliverer',i:'⛈️'},{n:'Thunder Deliverer',i:'🌩️'},{n:'Lightning Deliverer',i:'⚡'},{n:'Surge Deliverer',i:'🌊'},{n:'Rocket Deliverer',i:'🚀'},
+  {n:'Comet Deliverer',i:'☄️'},{n:'Nova Deliverer',i:'🌟'},{n:'Supernova Deliverer',i:'💥'},{n:'Galaxy Deliverer',i:'🌌'},{n:'Legend Deliverer',i:'👑'},
+  {n:'Titan Deliverer',i:'🗿'},{n:'Colossus Deliverer',i:'🏔️'},{n:'Giant Deliverer',i:'🦣'},{n:'Mammoth Deliverer',i:'🦏'},{n:'Crusher Deliverer',i:'💪'},
+  {n:'Warrior Deliverer',i:'⚔️'},{n:'Champion Deliverer',i:'🏆'},{n:'Victor Deliverer',i:'🥇'},{n:'Hero Deliverer',i:'🦸'},{n:'Guardian Deliverer',i:'🛡️'},
+  {n:'Phantom Deliverer',i:'👻'},{n:'Shadow Deliverer',i:'🌑'},{n:'Ghost Deliverer',i:'💨'},{n:'Specter Deliverer',i:'🌫️'},{n:'Venom Deliverer',i:'🐍'},
+  {n:'Cobra Deliverer',i:'🐉'},{n:'Viper Deliverer',i:'🦎'},{n:'Predator Deliverer',i:'🦅'},{n:'Hunter Deliverer',i:'🎯'},{n:'Apex Deliverer',i:'🔺'},
+  {n:'Iron Deliverer',i:'🔩'},{n:'Steel Deliverer',i:'⚙️'},{n:'Titanium Deliverer',i:'🪨'},{n:'Diamond Deliverer',i:'💎'},{n:'Crystal Deliverer',i:'🔮'},
+  {n:'Sapphire Deliverer',i:'💙'},{n:'Ruby Deliverer',i:'❤️'},{n:'Emerald Deliverer',i:'💚'},{n:'Platinum Deliverer',i:'🪙'},{n:'Gold Deliverer',i:'🥇'},
+  {n:'Omega Deliverer',i:'🔱'},{n:'Alpha Deliverer',i:'🅰️'},{n:'Prime Deliverer',i:'⭐'},{n:'Elite Deliverer',i:'🎖️'},{n:'Ultra Deliverer',i:'🔥'},
+  {n:'Mega Deliverer',i:'💥'},{n:'Hyper Deliverer',i:'⚡'},{n:'Turbo Deliverer',i:'🏎️'},{n:'Nitro Deliverer',i:'💨'},{n:'Overdrive Deliverer',i:'🚀'},
+  {n:'Phantom Deliverer',i:'👁️'},{n:'Eclipse Deliverer',i:'🌑'},{n:'Nebula Deliverer',i:'🌌'},{n:'Cosmos Deliverer',i:'🪐'},{n:'Stellar Deliverer',i:'⭐'},
+  {n:'Astro Deliverer',i:'🚀'},{n:'Orbit Deliverer',i:'🛸'},{n:'Lunar Deliverer',i:'🌙'},{n:'Solar Deliverer',i:'☀️'},{n:'Celestial Deliverer',i:'🌠'},
+  {n:'Thunder God Deliverer',i:'⚡'},{n:'Fire God Deliverer',i:'🔥'},{n:'Storm God Deliverer',i:'🌪️'},{n:'Ice God Deliverer',i:'🧊'},{n:'Earth God Deliverer',i:'🌍'},
+  {n:'Wind God Deliverer',i:'💨'},{n:'Ocean God Deliverer',i:'🌊'},{n:'Sky God Deliverer',i:'☁️'},{n:'Sun God Deliverer',i:'☀️'},{n:'Moon God Deliverer',i:'🌕'},
+  {n:'Immortal Deliverer',i:'👼'},{n:'Eternal Deliverer',i:'♾️'},{n:'Infinite Deliverer',i:'🔄'},{n:'Supreme Deliverer',i:'👑'},{n:'Sovereign Deliverer',i:'🏰'},
+  {n:'Emperor Deliverer',i:'👘'},{n:'King Deliverer',i:'🤴'},{n:'Overlord Deliverer',i:'🦁'},{n:'Dominator Deliverer',i:'💀'},{n:'Conqueror Deliverer',i:'⚔️'},
+  {n:'Mythic Deliverer',i:'🐉'},{n:'Divine Deliverer',i:'✨'},{n:'Godlike Deliverer',i:'🌟'},{n:'Transcendent Deliverer',i:'🌈'},{n:'Ascended Deliverer',i:'🕊️'},
+  {n:'Immortal God Deliverer',i:'🔱'},{n:'Blazed Legend Deliverer',i:'🔥'},{n:'Ultimate Deliverer',i:'💥'},{n:"Oliver's Elite Deliverer",i:'👊'},{n:'B.L.A.Z.E.D Legend',i:'👑'}
+];
+
+// deliveries needed per rank (ramps up)
+function delivsNeeded(rank) {
+  if (rank <= 10) return rank - 1;
+  if (rank <= 30) return 10 + (rank - 10) * 2;
+  if (rank <= 60) return 50 + (rank - 30) * 5;
+  return 200 + (rank - 60) * 10;
+}
+
+const grid = document.getElementById('ranksGrid');
+RANKS.forEach((r, idx) => {
+  const rank = idx + 1;
+  const needed = delivsNeeded(rank);
+  const hue = Math.round((idx / 99) * 320);
+  const card = document.createElement('div');
+  card.className = 'rank-card';
+  card.style.borderColor = `hsla(${hue},80%,55%,0.3)`;
+  card.innerHTML = `
+    <div class="rank-num">#${rank}</div>
+    <span class="rank-icon">${r.i}</span>
+    <div class="rank-name" style="color:hsl(${hue},80%,65%)">${r.n}</div>
+    <div class="rank-req">${needed === 0 ? 'START HERE' : needed + '+ deliveries'}</div>
+  `;
+  grid.appendChild(card);
+});
+
 document.getElementById('joinForm').addEventListener('submit', function(e) {
   e.preventDefault();
   const f = this;
