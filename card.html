@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Membership Card — B.L.A.Z.E.D</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700;900&family=Courier+Prime:wght@400;700&family=Nunito:wght@400;700;900&display=swap');
+
+@media screen {
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:#07090f;display:flex;flex-direction:column;align-items:center;padding:40px 20px;font-family:'Nunito',sans-serif;min-height:100vh;}
+  h1{font-family:'Oswald',sans-serif;font-size:28px;letter-spacing:4px;color:#ff6b00;margin-bottom:6px;text-align:center;}
+  .sub{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:3px;color:#444;margin-bottom:32px;text-align:center;}
+  .builder{background:#0d1220;border:1px solid #1a2030;border-radius:16px;padding:28px;width:100%;max-width:480px;margin-bottom:32px;}
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-family:'Oswald',sans-serif;font-size:12px;letter-spacing:2px;color:#ff6b00;margin-bottom:6px;}
+  .field input,.field select{width:100%;background:#07090f;border:1px solid #1a2030;border-radius:6px;padding:10px 14px;font-family:'Nunito',sans-serif;font-size:15px;color:#f8faff;outline:none;}
+  .field input:focus,.field select:focus{border-color:#ff6b00;}
+  .field select option{background:#07090f;}
+  .print-btn{background:linear-gradient(135deg,#ff6b00,#ffd000);color:#000;border:none;padding:14px 48px;font-family:'Oswald',sans-serif;font-size:18px;letter-spacing:3px;font-weight:700;border-radius:8px;cursor:pointer;margin-bottom:12px;}
+  .back{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:3px;color:#444;text-decoration:none;display:block;text-align:center;margin-top:8px;}
+  .back:hover{color:#ff6b00;}
+  .card{box-shadow:0 0 40px rgba(255,107,0,0.3);}
+}
+
+@media print {
+  body{margin:0;padding:0;background:#fff;}
+  h1,.sub,.builder,.print-btn,.back,.label{display:none;}
+  .card-wrap{margin:0;padding:0.8in 1in;display:flex;flex-direction:column;gap:0.3in;}
+  @page{margin:0;size:letter;}
+}
+
+.card-wrap{display:flex;flex-direction:column;align-items:center;gap:16px;}
+.label{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:3px;color:#444;text-align:center;}
+
+.card{
+  width:3.5in;height:2in;border-radius:16px;
+  background:linear-gradient(135deg,#0d1220,#07090f);
+  border:2px solid #ff6b00;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:space-between;padding:16px 18px;
+}
+.card-glow{position:absolute;width:200px;height:200px;border-radius:50%;background:rgba(255,107,0,0.08);top:-60px;right:-60px;pointer-events:none;}
+.card-glow2{position:absolute;width:150px;height:150px;border-radius:50%;background:rgba(255,208,0,0.05);bottom:-40px;left:-40px;pointer-events:none;}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:1;}
+.card-brand{font-family:'Oswald',sans-serif;font-size:18px;font-weight:900;letter-spacing:4px;line-height:1;}
+.card-brand .b{color:#ff6b00;}.card-brand .l{color:#ffd000;}.card-brand .a{color:#0099ff;}.card-brand .z{color:#ff4d6d;}.card-brand .e{color:#00e676;}.card-brand .d{color:#ff8c38;}.card-brand .dot{color:#333;}
+.card-type{font-family:'Courier Prime',monospace;font-size:8px;letter-spacing:2px;color:#444;margin-top:2px;}
+.card-icon{font-size:32px;}
+.card-mid{position:relative;z-index:1;}
+.card-name{font-family:'Oswald',sans-serif;font-size:22px;font-weight:700;letter-spacing:2px;color:#f8faff;line-height:1;}
+.card-rank{font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:3px;color:#ff6b00;margin-top:3px;}
+.card-bottom{display:flex;justify-content:space-between;align-items:flex-end;position:relative;z-index:1;}
+.card-url{font-family:'Courier Prime',monospace;font-size:7px;letter-spacing:1px;color:#333;}
+.card-badge{background:linear-gradient(135deg,#ff6b00,#ffd000);border-radius:4px;padding:3px 8px;font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:1px;color:#000;font-weight:700;}
+
+.card-back{
+  width:3.5in;height:2in;border-radius:16px;
+  background:#07090f;border:2px solid #1a2030;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;padding:16px 18px;
+}
+.card-back-stripe{position:absolute;top:32px;left:0;right:0;height:36px;background:#111;}
+.card-back-logo{font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:5px;color:#333;position:relative;z-index:1;}
+.card-back-msg{font-family:'Courier Prime',monospace;font-size:8px;letter-spacing:1px;color:#333;text-align:center;max-width:2.8in;line-height:1.6;position:relative;z-index:1;}
+.card-back-url{font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:2px;color:#ff6b00;position:relative;z-index:1;}
+</style>
+</head>
+<body>
+
+<h1>MEMBERSHIP CARD</h1>
+<p class="sub">// FILL IN YOUR INFO · PRINT · CUT IT OUT</p>
+
+<div class="builder">
+  <div class="field">
+    <label>YOUR NAME</label>
+    <input type="text" id="nameInput" placeholder="Oliver Vo" oninput="update()" maxlength="24">
+  </div>
+  <div class="field">
+    <label>YOUR RANK</label>
+    <select id="rankInput" onchange="update()"></select>
+  </div>
+</div>
+
+<div class="card-wrap">
+  <div class="label">FRONT</div>
+  <div class="card">
+    <div class="card-glow"></div>
+    <div class="card-glow2"></div>
+    <div class="card-top">
+      <div>
+        <div class="card-brand">
+          <span class="b">B</span><span class="dot">.</span><span class="l">L</span><span class="dot">.</span><span class="a">A</span><span class="dot">.</span><span class="z">Z</span><span class="dot">.</span><span class="e">E</span><span class="dot">.</span><span class="d">D</span>
+        </div>
+        <div class="card-type">OFFICIAL DELIVERY CREW</div>
+      </div>
+      <div class="card-icon" id="cardIcon">✦</div>
+    </div>
+    <div class="card-mid">
+      <div class="card-name" id="cardName">YOUR NAME</div>
+      <div class="card-rank" id="cardRank">// RANK 1 · SPARK DELIVERER</div>
+    </div>
+    <div class="card-bottom">
+      <div class="card-url">oliveryvo-cmd.github.io/blazed</div>
+      <div class="card-badge">CREW MEMBER</div>
+    </div>
+  </div>
+
+  <div class="label" style="margin-top:8px;">BACK</div>
+  <div class="card-back">
+    <div class="card-back-stripe"></div>
+    <div class="card-back-logo">B.L.A.Z.E.D</div>
+    <div class="card-back-msg">This card certifies that the holder is an official member of the B.L.A.Z.E.D Delivery Crew — Bringing Love And Zeal to Every Disabled Kid. Founded by Oliver Vo, age 10, Ladera Ranch, CA.</div>
+    <div class="card-back-url">oliveryvo-cmd.github.io/blazed</div>
+  </div>
+</div>
+
+<br>
+<button class="print-btn" onclick="window.print()">🖨️ PRINT MY CARD</button>
+<a href="index.html" class="back">← BACK TO B.L.A.Z.E.D</a>
+
+<script>
+const RANKS=[
+  {n:'Spark Deliverer',i:'✦'},{n:'Ignite Deliverer',i:'🔆'},{n:'Ember Deliverer',i:'🌟'},
+  {n:'Flame Deliverer',i:'🔥'},{n:'Blaze Deliverer',i:'💥'},{n:'Torch Deliverer',i:'🕯️'},
+  {n:'Burn Deliverer',i:'⚡'},{n:'Flare Deliverer',i:'✨'},{n:'Glow Deliverer',i:'💡'},
+  {n:'Radiant Deliverer',i:'☀️'},{n:'Shine Deliverer',i:'🌠'},{n:'Beam Deliverer',i:'🌤️'},
+  {n:'Ray Deliverer',i:'🌈'},{n:'Burst Deliverer',i:'💫'},{n:'Nova Deliverer',i:'🌌'},
+  {n:'Solar Deliverer',i:'🌞'},{n:'Comet Deliverer',i:'☄️'},{n:'Star Deliverer',i:'⭐'},
+  {n:'Supernova Deliverer',i:'🌟'},{n:'Meteor Deliverer',i:'🌠'},{n:'Orbit Deliverer',i:'🪐'},
+  {n:'Galaxy Deliverer',i:'🌌'},{n:'Cosmos Deliverer',i:'🔭'},{n:'Quasar Deliverer',i:'💠'},
+  {n:'Pulsar Deliverer',i:'📡'},{n:'Photon Deliverer',i:'⚛️'},{n:'Plasma Deliverer',i:'🔬'},
+  {n:'Fusion Deliverer',i:'💎'},{n:'Reactor Deliverer',i:'⚙️'},{n:'Core Deliverer',i:'🎯'},
+  {n:'Force Deliverer',i:'🌀'},{n:'Surge Deliverer',i:'⚡'},{n:'Volt Deliverer',i:'🔋'},
+  {n:'Amp Deliverer',i:'🔌'},{n:'Power Deliverer',i:'💪'},{n:'Titan Deliverer',i:'🦾'},
+  {n:'Iron Deliverer',i:'🛡️'},{n:'Steel Deliverer',i:'⚔️'},{n:'Diamond Deliverer',i:'💎'},
+  {n:'Crystal Deliverer',i:'🔷'},{n:'Sapphire Deliverer',i:'🔹'},{n:'Ruby Deliverer',i:'🔴'},
+  {n:'Emerald Deliverer',i:'💚'},{n:'Gold Deliverer',i:'🥇'},{n:'Platinum Deliverer',i:'🏆'},
+  {n:'Elite Deliverer',i:'🎖️'},{n:'Pro Deliverer',i:'🎯'},{n:'Ace Deliverer',i:'🃏'},
+  {n:'Champion Deliverer',i:'🏅'},{n:'Master Deliverer',i:'🎓'},{n:'Expert Deliverer',i:'🧠'},
+  {n:'Veteran Deliverer',i:'⭐'},{n:'Legend Deliverer',i:'👑'},{n:'Myth Deliverer',i:'🌟'},
+  {n:'Epic Deliverer',i:'💥'},{n:'Ultra Deliverer',i:'⚡'},{n:'Mega Deliverer',i:'🔥'},
+  {n:'Hyper Deliverer',i:'💫'},{n:'Super Deliverer',i:'🦸'},{n:'Omega Deliverer',i:'⭕'},
+  {n:'Alpha Deliverer',i:'🔺'},{n:'Apex Deliverer',i:'🏔️'},{n:'Summit Deliverer',i:'⛰️'},
+  {n:'Peak Deliverer',i:'🗻'},{n:'Zenith Deliverer',i:'🌅'},{n:'Crown Deliverer',i:'👑'},
+  {n:'Royal Deliverer',i:'🤴'},{n:'Noble Deliverer',i:'🎩'},{n:'Honor Deliverer',i:'🎗️'},
+  {n:'Glory Deliverer',i:'🌟'},{n:'Triumph Deliverer',i:'🏆'},{n:'Victory Deliverer',i:'🥇'},
+  {n:'Valor Deliverer',i:'⚔️'},{n:'Brave Deliverer',i:'🦁'},{n:'Bold Deliverer',i:'🐯'},
+  {n:'Fierce Deliverer',i:'🔥'},{n:'Mighty Deliverer',i:'💪'},{n:'Strong Deliverer',i:'🦾'},
+  {n:'Unstoppable Deliverer',i:'🚀'},{n:'Infinite Deliverer',i:'♾️'},{n:'Eternal Deliverer',i:'⏳'},
+  {n:'Immortal Deliverer',i:'🌟'},{n:'Invincible Deliverer',i:'🛡️'},{n:'Legendary Deliverer',i:'📜'},
+  {n:'Mythic Deliverer',i:'🐉'},{n:'Divine Deliverer',i:'✨'},{n:'Sacred Deliverer',i:'🌸'},
+  {n:'Supreme Deliverer',i:'👆'},{n:'Ultimate Deliverer',i:'🎯'},{n:'Absolute Deliverer',i:'💯'},
+  {n:'Infinite Blaze Deliverer',i:'🔥'},{n:'Eternal Flame Deliverer',i:'🕯️'},
+  {n:'Grand Master Deliverer',i:'🎖️'},{n:'High Commander Deliverer',i:'⭐'},
+  {n:'Supreme Commander Deliverer',i:'🌟'},{n:'B.L.A.Z.E.D Elite',i:'💎'},
+  {n:'B.L.A.Z.E.D Champion',i:'🏆'},{n:'B.L.A.Z.E.D Legend',i:'👑'}
+];
+
+const sel=document.getElementById('rankInput');
+RANKS.forEach((r,i)=>{
+  const opt=document.createElement('option');
+  opt.value=i;
+  opt.textContent='Rank '+(i+1)+' — '+r.n;
+  sel.appendChild(opt);
+});
+
+function update(){
+  const name=document.getElementById('nameInput').value.trim()||'YOUR NAME';
+  const idx=parseInt(sel.value);
+  const rank=RANKS[idx];
+  document.getElementById('cardName').textContent=name.toUpperCase();
+  document.getElementById('cardRank').textContent='// RANK '+(idx+1)+' · '+rank.n.toUpperCase();
+  document.getElementById('cardIcon').textContent=rank.i;
+}
+update();
+</script>
+</body>
+</html>
